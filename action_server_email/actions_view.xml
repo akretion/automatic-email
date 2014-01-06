@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+
+   <record id="view_server_action__template_form" model="ir.ui.view">
+         <field name="name">Server Action Template</field>
+         <field name="model">ir.actions.server</field>
+         <field name="inherit_id" ref="base.view_server_action_form" />
+         <field name="type">form</field>
+         <field eval="20" name="priority"/>
+         <field name="arch" type="xml">
+             <xpath expr="/form/notebook/page[@string='Email Configuration']" position="after">
+                <page string="Email Template" attrs="{'invisible':[('state','!=','email_template')]}">
+                    <group>
+                        <field name="email_template_id" attrs="{'required':[('state','=','email_template')]}"/>
+                    </group>
+                </page>
+             </xpath>
+            <field name="srcmodel_id" position="attributes">
+                <attribute name="attrs">{'required':[('state','in',('object_create', 'object_write'))]}</attribute>
+            </field>
+         </field>
+     </record>
+
+</data>
+</openerp>
