@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+
+      <record id="action_sale_mail" model="ir.actions.server">
+        <field name="name">Sale Confirmation Email</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="state">email_template</field>
+        <field name="email_template_id" ref="sale.email_template_edi_sale"/>
+      </record>
+
+      
+    </data>
+</openerp>
