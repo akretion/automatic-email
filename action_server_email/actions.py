@@ -29,21 +29,14 @@ class actions_server(osv.osv):
 
     _columns = {
         'email_template_id': fields.many2one('email.template', 'Email Template'),
-        'state': fields.selection([
-            ('client_action','Client Action'),
-            ('dummy','Dummy'),
-            ('loop','Iteration'),
-            ('code','Python Code'),
-            ('trigger','Trigger'),
-            ('email','Email'),
-            ('email_template', 'Email Template'),
-            ('sms','SMS'),
-            ('object_create','Create Object'),
-            ('object_copy','Copy Object'),
-            ('object_write','Write Object'),
-            ('other','Multi Actions'),
-        ], 'Action Type', required=True, size=32, help="Type of the Action that is to be executed"),
     }
+
+    def __init__(self, pool, cr):
+        super(actions_server, self).__init__(pool, cr)
+        option = ('email_template', 'Email Template')
+        type_selection = self._columns['state'].selection
+        if option not in type_selection:
+            type_selection.append(option)
 
     def run(self, cr, uid, ids, context=None):
         super(actions_server, self).run(cr, uid, ids, context=context)
@@ -67,7 +60,6 @@ class actions_server(osv.osv):
             expr = eval(str(action.condition), cxt)
             if not expr:
                 continue
-            
             if action.state == 'email_template':
                 template_obj = self.pool.get('email.template')
                 template_id = action.email_template_id.id
