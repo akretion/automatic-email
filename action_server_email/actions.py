@@ -63,7 +63,7 @@ class actions_server(osv.osv):
             if action.state == 'email_template':
                 template_obj = self.pool.get('email.template')
                 template_id = action.email_template_id.id
-                template_obj.send_mail(cr, uid, template_id, obj.id, force_send=True, context=context)
+                template_obj.send_mail(cr, uid, template_id, obj.id, force_send=False, context=context)
         return False
 
 
