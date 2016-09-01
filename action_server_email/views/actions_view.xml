@@ -9,14 +9,14 @@
          <field name="type">form</field>
          <field eval="20" name="priority"/>
          <field name="arch" type="xml">
-             <xpath expr="/form/notebook/page[@string='Email Configuration']" position="after">
+             <xpath expr="//page[last()]" position="after">
                 <page string="Email Template" attrs="{'invisible':[('state','!=','email_template')]}">
                     <group>
                         <field name="email_template_id" attrs="{'required':[('state','=','email_template')]}"/>
                     </group>
                 </page>
              </xpath>
-            <field name="srcmodel_id" position="attributes">
+            <field name="crud_model_id" position="attributes">
                 <attribute name="attrs">{'required':[('state','in',('object_create', 'object_write'))]}</attribute>
             </field>
          </field>
