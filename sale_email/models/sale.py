@@ -39,6 +39,9 @@ class SaleOrder(models.Model):
                 action_dict.update({'context': ctx})
         return action_dict
 
-
+    @api.multi
+    def action_confirm(self):
+        return super(
+            SaleOrder,self.with_context(send_email=True)).action_confirm()
 
 

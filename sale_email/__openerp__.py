@@ -20,7 +20,6 @@
     ], 
     'data': [ 
         'data/sale_data.xml',
-        'views/sale_view.xml',
     ],
     'installable': True,
 }
