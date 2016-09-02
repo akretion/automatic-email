@@ -4,10 +4,10 @@
 
 
         <!--Email template -->
-        <record id="email_template_delivering_confirmation" model="email.template">
-            <field name="name">Delivering - Confirmation mail</field>
+        <record id="email_template_invoice_confirmation" model="mail.template">
+            <field name="name">Invoice - Confirmation mail</field>
             <field name="email_from">${(object.user_id.email or '')|safe}</field>
-            <field name="subject">${object.company_id.name} Delivering Confirmation (Ref ${object.name or 'n/a' })</field>
+            <field name="subject">${object.company_id.name} Invoice Confirmation (Ref ${object.name or 'n/a' })</field>
             <field name="email_recipients">${object.partner_id.id}</field>
             <field name="email_to">${object.partner_id.email}</field>
             <field name="model_id" ref="account.model_account_invoice"/>
@@ -18,11 +18,11 @@
         </record>
 
       <record id="action_stock_mail" model="ir.actions.server">
-        <field name="name">Delivering Order Confirmation</field>
+        <field name="name">Invoice Confirmation mail</field>
         <field name="condition">object.type == 'out_invoice'</field>
         <field name="model_id" ref="account.model_account_invoice"/>
-        <field name="state">email_template</field>
-        <field name="email_template_id" ref="email_template_delivering_confirmation"/>
+        <field name="state">mail_template</field>
+        <field name="email_template_id" ref="email_template_invoice_confirmation"/>
       </record>
 
       
