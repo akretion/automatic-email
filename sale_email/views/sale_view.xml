@@ -8,10 +8,9 @@
          <field name="type">form</field>
          <field eval="20" name="priority"/>
          <field name="arch" type="xml">
-             <xpath expr="//button[@name='action_confirm']" position="attributes">
+             <xpath expr="//button[@name='action_confirm' and @states='draft']" position="attributes">
                 <attribute name="context">{'send_email': True}</attribute>
              </xpath>
-            </field>
          </field>
      </record>
 

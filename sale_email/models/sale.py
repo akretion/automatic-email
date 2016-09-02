@@ -17,21 +17,24 @@ class SaleOrder(models.Model):
         '''
         This function opens a window to compose an email, with the edi sale template message loaded by default
         '''
+        ## ---> Set BreakPoint
+        import pdb;
+        pdb.set_trace()
         self.ensure_one()
-        action_dict = super(ActionsServer, self).action_quotation_send()
+        action_dict = super(SaleOrder, self).action_quotation_send()
         if self.env.context.get('send_email'):
             ctx = action_dict['context']
             template_id = False
             ir_model_data = self.env['ir.model.data']
             try:
-                template_id = self.ref(
+                template_id = self.env.ref(
                     'sale_email.email_template_sale_confirmation')
             except ValueError:
                 template_id = False
             if template_id:
-               ctx.update({
-                'default_use_template': bool(template_id),
-                'default_template_id': template_id,
+                ctx.update({
+                'default_use_template': bool(template_id.id),
+                'default_template_id': template_id.id,
                 })
                 action_dict.update({'context': ctx})
         return action_dict

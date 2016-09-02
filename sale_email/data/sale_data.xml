@@ -4,7 +4,7 @@
 
 
         <!--Email template -->
-        <record id="email_template_sale_confirmation" model="email.template">
+        <record id="email_template_sale_confirmation" model="mail.template">
             <field name="name">Sales Order - Confirmation mail</field>
             <field name="email_from">${(object.user_id.email or '')|safe}</field>
             <field name="email_to">${object.partner_invoice_id.email}</field>
@@ -12,13 +12,13 @@
             <field name="model_id" ref="sale.model_sale_order"/>
             <field name="auto_delete" eval="True"/>
             <field name="report_template" ref="sale.report_sale_order"/>
-            <field name="lang">${object.partner_id.lang}</field>
+            <field name="lang">${object.partner_id.lang or object.user_id.lang }</field>
         </record>
 
       <record id="action_sale_mail" model="ir.actions.server">
         <field name="name">Sale Confirmation Email</field>
         <field name="model_id" ref="sale.model_sale_order"/>
-        <field name="state">email_template</field>
+        <field name="state">mail_template</field>
         <field name="email_template_id" ref="email_template_sale_confirmation"/>
       </record>
 
