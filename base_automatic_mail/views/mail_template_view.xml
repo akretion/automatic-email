@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+
+   <record id="view_email_template_mail_auto_form" model="ir.ui.view">
+         <field name="model">mail.template</field>
+         <field name="inherit_id" ref="mail.email_template_form" />
+         <field name="type">form</field>
+         <field name="arch" type="xml">
+            <field name="model_id" position="after">
+                 <field name="automail_confirm"/>
+            </field>
+         </field>
+     </record>
+
+</data>
+</openerp>
