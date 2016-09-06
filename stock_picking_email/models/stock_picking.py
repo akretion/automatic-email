@@ -11,7 +11,8 @@ class StockPicking(models.Model):
     _name = 'stock.picking'
 
     @api.multi
-    def action_done(self):
-        res = super(StockPicking, self).action_done()
-        self.force_confirm_mail_send()
+    def write(self, vals):
+        res = super(StockPicking, self).write(vals)
+        if vals.get('date_done', False):
+            self.force_confirm_mail_send()
         return res
