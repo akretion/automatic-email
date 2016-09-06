@@ -13,5 +13,8 @@ class AccountInvoice(models.Model):
     @api.multi
     def invoice_validate(self):
         res = super(AccountInvoice, self).invoice_validate()
-        self.force_confirm_mail_send()
+        # send confirmation mail only for Customer invoices
+        out_invoice = self.filtered(
+                lambda r: r.type == 'out_invoice')
+        out_invoice.force_confirm_mail_send()
         return res
