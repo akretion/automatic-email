@@ -14,5 +14,8 @@ class StockPicking(models.Model):
     def write(self, vals):
         res = super(StockPicking, self).write(vals)
         if vals.get('date_done', False):
-            self.force_confirm_mail_send()
+            # send confirmation mail only for Customer delivery
+            outgoings = self.filtered(
+                lambda p: p.picking_type_id.code == 'outgoing')
+            outgoings.force_confirm_mail_send()
         return res
