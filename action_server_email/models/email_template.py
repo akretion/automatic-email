@@ -7,7 +7,7 @@
 from openerp import fields, models
 
 class EmailTemplate(models.Model):
-    _inherit = "mail.template"
+    _inherit = 'mail.template'
 
     action_server_ids = fields.One2many(
     	'ir.actions.server', 'email_template_id', string='Action Server')
