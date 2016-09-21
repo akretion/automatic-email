@@ -13,5 +13,7 @@ class SaleOrder(models.Model):
     @api.multi
     def action_confirm(self):
         res = super(SaleOrder, self).action_confirm()
-        self.force_confirm_mail_send()
+        selected_sale = self.should_send_mail()
+        if selected_sale:
+            selected_sale.force_confirm_mail_send()
         return res
