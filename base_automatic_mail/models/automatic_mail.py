@@ -29,22 +29,28 @@ class AutomaticMail(models.AbstractModel):
         template_id = self._get_mail_auto_template()
         if template_id:
             for obj in self:
-                # Send confirmation message only once
-                if not obj.automail_confirm_sent:
-                    email_ctx = dict(
-                        default_model=self._name,
-                        default_res_id=self.id,
-                        default_use_template=bool(template_id),
-                        default_template_id=template_id.id,
-                        default_composition_mode='comment',
-                        mark_confirm_sent=True,
-                        auto_confirm_mail=True,
-                    )
-                    email_ctx.update(default_email_from=obj.company_id.email)
-                    obj.with_context(email_ctx).message_post_with_template(
-                        template_id.id)
+                email_ctx = dict(
+                    default_model=self._name,
+                    default_res_id=self.id,
+                    default_use_template=bool(template_id),
+                    default_template_id=template_id.id,
+                    default_composition_mode='comment',
+                    mark_confirm_sent=True,
+                    auto_confirm_mail=True,
+                )
+                email_ctx.update(default_email_from=obj.company_id.email)
+                obj.with_context(email_ctx).message_post_with_template(
+                    template_id.id)
         return True
 
+    def should_send_mail(self):
+        # Send confirmation message only once
+        selected_obj = self.filtered(
+            lambda r: r.automail_confirm_sent == False)
+        if selected_obj:
+            return selected_obj
+        else:
+            return False
 
 class MailComposeMessage(models.Model):
     _inherit = 'mail.compose.message'
