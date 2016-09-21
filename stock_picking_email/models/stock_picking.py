@@ -10,12 +10,21 @@ class StockPicking(models.Model):
     _inherit = ['stock.picking', 'automatic.mail.mixin']
     _name = 'stock.picking'
 
+    def should_send_mail(self):
+        res = super(StockPicking, self).should_send_mail()
+        # send confirmation mail only for Customer delivery
+        selected_pik = res.filtered(
+            lambda p: p.picking_type_id.code == 'outgoing')
+        if selected_pik:
+            return selected_pik
+        else:
+            return False
+
     @api.multi
     def write(self, vals):
         res = super(StockPicking, self).write(vals)
         if vals.get('date_done', False):
-            # send confirmation mail only for Customer delivery
-            outgoings = self.filtered(
-                lambda p: p.picking_type_id.code == 'outgoing')
-            outgoings.force_confirm_mail_send()
+            selected_pik = self.should_send_mail()
+            if selected_pik:
+                selected_pik.force_confirm_mail_send()
         return res
