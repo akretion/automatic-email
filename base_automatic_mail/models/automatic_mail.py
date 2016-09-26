@@ -50,7 +50,7 @@ class AutomaticMail(models.AbstractModel):
         if selected_obj:
             return selected_obj
         else:
-            return False
+            return self.browse(False)
 
 class MailComposeMessage(models.Model):
     _inherit = 'mail.compose.message'
