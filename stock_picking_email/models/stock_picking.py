@@ -18,7 +18,7 @@ class StockPicking(models.Model):
         if selected_pik:
             return selected_pik
         else:
-            return False
+            return res
 
     @api.multi
     def write(self, vals):
