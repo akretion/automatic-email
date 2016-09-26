@@ -18,7 +18,7 @@ class AccountInvoice(models.Model):
         if selected_inv:
             return selected_inv
         else:
-            return False
+            return res
 
     @api.multi
     def invoice_validate(self):
