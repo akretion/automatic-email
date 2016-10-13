@@ -47,10 +47,7 @@ class AutomaticMail(models.AbstractModel):
         # Send confirmation message only once
         selected_obj = self.filtered(
             lambda r: r.automail_confirm_sent == False)
-        if selected_obj:
-            return selected_obj
-        else:
-            return self.browse(False)
+        return selected_obj or self.browse(False)
 
 class MailComposeMessage(models.Model):
     _inherit = 'mail.compose.message'

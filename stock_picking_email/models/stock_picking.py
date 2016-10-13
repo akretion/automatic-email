@@ -15,10 +15,7 @@ class StockPicking(models.Model):
         # send confirmation mail only for Customer delivery
         selected_pik = res.filtered(
             lambda p: p.picking_type_id.code == 'outgoing')
-        if selected_pik:
-            return selected_pik
-        else:
-            return res
+        return selected_pik or self.browse(False)
 
     @api.multi
     def write(self, vals):

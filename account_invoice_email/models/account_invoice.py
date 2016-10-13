@@ -15,10 +15,7 @@ class AccountInvoice(models.Model):
         # send confirmation mail only for Customer invoices
         selected_inv = res.filtered(
             lambda r: r.type == 'out_invoice')
-        if selected_inv:
-            return selected_inv
-        else:
-            return res
+        return selected_inv or self.browse(False)
 
     @api.multi
     def invoice_validate(self):
