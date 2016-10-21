@@ -19,7 +19,8 @@ class AutomaticMail(models.AbstractModel):
         Get the mail template
         '''
         model_id = self.env['ir.model'].search([('model', '=', self._name)])
-        template_id = self.env['mail.template'].search(
+        template_obj = self.env['mail.template']
+        template_id = template_obj.search(
             [('model_id', '=', model_id.id), ('automail_confirm', '=', True)],
             limit=1)
         return template_id
@@ -29,18 +30,7 @@ class AutomaticMail(models.AbstractModel):
         template_id = self._get_mail_auto_template()
         if template_id:
             for obj in self:
-                email_ctx = dict(
-                    default_model=self._name,
-                    default_res_id=self.id,
-                    default_use_template=bool(template_id),
-                    default_template_id=template_id.id,
-                    default_composition_mode='comment',
-                    mark_confirm_sent=True,
-                    auto_confirm_mail=True,
-                )
-                email_ctx.update(default_email_from=obj.company_id.email)
-                obj.with_context(email_ctx).message_post_with_template(
-                    template_id.id)
+                template_id.send_mail(obj.id)
         return True
 
     def should_send_mail(self):
