@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data noupdate="1">
+
+        <record id="sale_invoice_mail_tmpl" model="mail.template">
+            <field name="name">Sales Order - Invoice Mail</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="lang">${object.partner_id.lang}</field>
+        </record>
+
+    </data>
+</openerp>
