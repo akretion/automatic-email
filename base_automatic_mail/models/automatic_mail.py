@@ -31,6 +31,7 @@ class AutomaticMail(models.AbstractModel):
         if template_id:
             for obj in self:
                 template_id.send_mail(obj.id)
+                obj.automail_confirm_sent = True
         return True
 
     def should_send_mail(self):
